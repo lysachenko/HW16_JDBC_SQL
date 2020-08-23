@@ -19,7 +19,7 @@ public class StudentTableCreator {
                     + " city varchar(255));";
 
     public void create() {
-        try (Connection connection = JDBCUtil.getConnection();
+        try (Connection connection = JDBCUtil.getInstance().getConnection();
              Statement statement = connection.createStatement()
         ) {
             statement.execute(DROP_TABLE);

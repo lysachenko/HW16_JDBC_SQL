@@ -7,6 +7,8 @@ import com.lysachenko.inserter.StudentInserter;
 
 public class Executor {
 
+    private static final String LETTER = "J";
+
     public void run() {
         new StudentTableCreator().create();
         new StudentInserter().insertTestValues();
@@ -17,10 +19,10 @@ public class Executor {
 
         System.out.println("\nCount of students: " + studentDao.getCountOfStudents());
 
-        System.out.println("\nStudents with firstname letter like R:");
-        studentDao.getStudentsByFirstLetter("R").forEach(System.out::println);
+        System.out.println("\nStudents with firstname letter like " + LETTER + ": ");
+        studentDao.getStudentsByFirstLetter(LETTER).forEach(System.out::println);
 
-        studentDao.deleteStudentsAgeBetween(21, 30);
+        studentDao.deleteStudentsAgeBetween(20, 45);
         System.out.println("\nStudent list after deleting:");
         studentDao.getStudentsOrderByAge().forEach(System.out::println);
         System.out.println("\nCount of students after deleting: " + studentDao.getCountOfStudents());

@@ -13,12 +13,12 @@ public class StudentDaoImpl implements StudentDao {
     private static final String GET_ALL_STUDENTS_ORDER_BY_AGE = "select * from students order by age";
     private static final String COUNT_OF_STUDENTS = "select count(*) from students";
     private static final String GET_STUDENTS_BY_FIRST_LETTER = "select * from students where FIRST_NAME like ? || '%';";
-    private static final String DELETE_STUDENTS_WHERE_AGE_BETWEEN = "delete from students where AGE > ? and AGE < ?;";
+    private static final String DELETE_STUDENTS_WHERE_AGE_BETWEEN = "delete from students where AGE >= ? and AGE <= ?;";
 
     @Override
     public List<Student> getStudentsOrderByAge() {
         List<Student> students = new ArrayList<>();
-        try (Connection connection = JDBCUtil.getConnection();
+        try (Connection connection = JDBCUtil.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_STUDENTS_ORDER_BY_AGE)
         ) {
             ResultSet rs = preparedStatement.executeQuery();
@@ -41,7 +41,7 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public int getCountOfStudents() {
         int count = -1;
-        try (Connection connection = JDBCUtil.getConnection();
+        try (Connection connection = JDBCUtil.getInstance().getConnection();
              Statement preparedStatement = connection.createStatement()
         ) {
             ResultSet rs = preparedStatement.executeQuery(COUNT_OF_STUDENTS);
@@ -58,7 +58,7 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public List<Student> getStudentsByFirstLetter(String letter) {
         List<Student> students = new ArrayList<>();
-        try (Connection connection = JDBCUtil.getConnection();
+        try (Connection connection = JDBCUtil.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_STUDENTS_BY_FIRST_LETTER)
         ) {
             preparedStatement.setString(1, letter);
@@ -81,7 +81,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public void deleteStudentsAgeBetween(int startAge, int endAge) {
-        try (Connection connection = JDBCUtil.getConnection();
+        try (Connection connection = JDBCUtil.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_STUDENTS_WHERE_AGE_BETWEEN)
         ) {
             preparedStatement.setInt(1, startAge);
