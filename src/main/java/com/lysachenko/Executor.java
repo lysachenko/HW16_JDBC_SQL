@@ -8,6 +8,8 @@ import com.lysachenko.inserter.StudentInserter;
 public class Executor {
 
     private static final String LETTER = "J";
+    private static final int LOWER_BOUND = 20;
+    private static final int UPPER_BOUND = 45;
 
     public void run() {
         new StudentTableCreator().create();
@@ -22,7 +24,7 @@ public class Executor {
         System.out.println("\nStudents with firstname letter like " + LETTER + ": ");
         studentDao.getStudentsByFirstLetter(LETTER).forEach(System.out::println);
 
-        studentDao.deleteStudentsAgeBetween(20, 45);
+        studentDao.deleteStudentsAgeBetween(LOWER_BOUND, UPPER_BOUND);
         System.out.println("\nStudent list after deleting:");
         studentDao.getStudentsOrderByAge().forEach(System.out::println);
         System.out.println("\nCount of students after deleting: " + studentDao.getCountOfStudents());
